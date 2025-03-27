@@ -25,3 +25,8 @@ A simple Flask API that generates executable Python code for automation tasks.
    ```
 
 ### Screenshots
+![image](https://github.com/user-attachments/assets/c6646bbb-136c-42f8-aa76-3279cd7bc32d)
+![image](https://github.com/user-attachments/assets/bebfb039-97c7-476e-afeb-a0e239b13e0c)
+![image](https://github.com/user-attachments/assets/53da0049-c078-4a62-9208-68824c1e8b3e)
+
+
