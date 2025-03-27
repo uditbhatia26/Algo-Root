@@ -1,5 +1,6 @@
 import streamlit as st
 from langchain.chains import create_retrieval_chain, create_history_aware_retriever
+from flask import Flask, request, jsonify
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -12,6 +13,8 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 import os
 from dotenv import load_dotenv
 load_dotenv()
+
+app = Flask(__name__)
 
 groq_api_key = os.getenv("GROQ_API_KEY")
 os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
@@ -110,3 +113,30 @@ if user_input := st.chat_input(placeholder='Describe your automation task...'):
     with st.chat_message('assistant'):
         st.session_state.messages.append({'role': 'assistant', 'content':response['answer']})
         st.write(response['answer'])
+
+
+@app.route('/execute', methods=['POST'])
+def execute():
+    data = request.get_json()
+    
+    if not data or 'prompt' not in data:
+        return jsonify({"error": "Missing 'prompt' in request"}), 400
+
+    prompt = data['prompt'].lower()
+
+    # Hardcoded response for "Open calculator"
+    if "calculator" in prompt:
+        response = {
+            "function": "open_calculator",
+            "code": "import os\nos.system('calc' if os.name == 'nt' else 'gnome-calculator')"
+        }
+    else:
+        response = {
+            "function": "unknown",
+            "code": "# No predefined function available"
+        }
+    
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(debug=True)
