@@ -1,0 +1,42 @@
+### Example Functions:
+
+```python
+import os
+import webbrowser
+import psutil
+import subprocess
+
+def open_chrome():
+    webbrowser.open("https://www.google.com")
+
+def open_calculator():
+    os.system("calc")
+
+def open_notepad():
+    os.system("notepad")
+
+def get_cpu_usage():
+    return psutil.cpu_percent(interval=1)
+
+def get_ram_usage():
+    return psutil.virtual_memory().percent
+
+def get_disk_usage():
+    return psutil.disk_usage('/').percent
+
+def run_shell_command(command):
+    try:
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        return result.stdout if result.returncode == 0 else result.stderr
+    except Exception as e:
+        return str(e)
+
+def list_running_processes():
+    return [(proc.pid, proc.name()) for proc in psutil.process_iter(['pid', 'name'])]
+
+def open_file_explorer():
+    os.system("explorer")
+```
+
+This function registry will serve as the foundation for dynamically executing automation tasks based on user input using LLM + RAG.
+
