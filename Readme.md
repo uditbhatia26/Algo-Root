@@ -23,3 +23,5 @@ A simple Flask API that generates executable Python code for automation tasks.
      "code": "import os\nos.system('calc' if os.name == 'nt' else 'gnome-calculator')"
    }
    ```
+
+### Screenshots
